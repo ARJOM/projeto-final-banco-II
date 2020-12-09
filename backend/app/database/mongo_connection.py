@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 
 
-# Carregando dados do ambiente virtual
+# Carregando dados do .env
 load_dotenv()
 
 MONGO_DB_NAME = os.getenv("MONGO_DB_NAME")
