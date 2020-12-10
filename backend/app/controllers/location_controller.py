@@ -14,6 +14,16 @@ def index():
     return jsonify(result)
 
 
+@app.route("/location/<string:id>", methods=['GET'])
+def detail(id):
+    cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    statement = f"SELECT * FROM localizacoes WHERE id='{id}'"
+    cursor.execute(statement)
+    result = cursor.fetchone()
+    cursor.close()
+    return jsonify(result)
+
+
 @app.route("/location", methods=['POST'])
 def create():
     data = request.json
