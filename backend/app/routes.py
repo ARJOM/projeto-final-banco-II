@@ -1,6 +1,2 @@
 from app import app
-
-
-@app.route('/')
-def index():
-    return 'Hello world'
+from app.controllers import location_controller
