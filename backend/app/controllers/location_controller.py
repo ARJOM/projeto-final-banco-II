@@ -57,13 +57,37 @@ def update(id):
     statement = f"UPDATE localizacoes "\
                 f"SET nome = '{data['nome']}', geom = ST_GeomFromText('{geom_statement}') "\
                 f"WHERE id = '{id}'"
-    
+
     try:
         cursor.execute(statement)
         psql.commit()
-    except :
+    except:
         return {"msg": "Erro ao atualizar informações"}, 500
 
     cursor.close()
     return {"msg": "Atualizado com sucesso"}
 
+
+@app.route("/location/<string:id>", methods=['DELETE'])
+def delete(id):
+    data = request.json
+    cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    # Verifica se já existe esse id passado
+    statement = f"SELECT id FROM localizacoes WHERE id='{id}'"
+    cursor.execute(statement)
+    location = cursor.fetchone()
+    if location is None:
+        return {"msg": "Não existe esse id registrado "}, 403
+
+    #Deletar localização
+    statement= f"DELETE FROM localizacoes where id = '{id}'"
+
+    try:
+        cursor.execute(statement)
+        psql.commit()
+    except:
+        return {"msg": "Erro ao deletar localização "}, 500
+
+    cursor.close()
+    return {"msg": "deletado com sucesso"}
