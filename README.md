@@ -37,3 +37,42 @@ Colecao de Empresa
 ### Neo4J
 
 Deve manter os relacionamentos entre Usuários e Empresas, tendo relacionamentos do tipo `trabalha` ou `trabalhou`.
+
+## Executando Backend
+
+1. Criar ambiente virtual
+    ```
+    python3 -m venv venv
+    ```
+2. Ativar ambiente virtual
+    ```
+    source venv/bin/activate
+    ```
+   2.1. Atualizar o pip
+   ```
+    pip install --upgrade pip
+    ```
+3. Instalar dependências
+    ```
+    pip install -r requirements.txt
+    ```
+4. Criar arquivo .env na raiz do projeto, e preencher o seguinte modelo
+    ```
+    DB_NAME=
+    PSQL_HOST=
+    PSQL_USER=
+    PSQL_PASSWORD=
+
+    MONGO_DB_NAME=
+    MONGO_HOST=
+    MONGO_PORT=
+
+    NEO4J_USER=
+    NEO4J_HOST=
+    NEO4J_PORT=
+    NEO4J_PASSWORD=
+    ``` 
+5. Executar o servidor do projeto
+    ```
+    python run.py
+    ```
