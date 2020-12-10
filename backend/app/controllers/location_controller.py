@@ -38,3 +38,32 @@ def create():
 
     cursor.close()
     return {"msg": "Localização criada com sucesso"}
+
+
+@app.route("/location/<string:id>", methods=['PUT'])
+def update(id):
+    data = request.json
+    cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+    # Verifica se já existe esse id passado
+    statement = f"SELECT id FROM localizacoes WHERE id='{id}'"
+    cursor.execute(statement)
+    location = cursor.fetchone()
+    if location is None:
+        return {"msg": "Não existe esse id registrado "}, 403
+
+    # update dados
+    geom_statement = f"POINT({data['lat']} {data['long']})"
+    statement = f"UPDATE localizacoes "\
+                f"SET nome = '{data['nome']}', geom = ST_GeomFromText('{geom_statement}') "\
+                f"WHERE id = '{id}'"
+    
+    try:
+        cursor.execute(statement)
+        psql.commit()
+    except :
+        return {"msg": "Erro ao atualizar informações"}, 500
+
+    cursor.close()
+    return {"msg": "Atualizado com sucesso"}
+
