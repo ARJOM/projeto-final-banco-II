@@ -5,7 +5,7 @@ from app.database.postgres_connection import conn_psql as psql
 
 
 @app.route("/location", methods=['GET'])
-def index():
+def list_location():
     cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     statement = "SELECT * FROM localizacoes"
     cursor.execute(statement)
@@ -15,7 +15,7 @@ def index():
 
 
 @app.route("/location/<string:id>", methods=['GET'])
-def detail(id):
+def detail_location(id):
     cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     statement = f"SELECT * FROM localizacoes WHERE id='{id}'"
     cursor.execute(statement)
@@ -25,7 +25,7 @@ def detail(id):
 
 
 @app.route("/location", methods=['POST'])
-def create():
+def create_location():
     data = request.json
     cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
@@ -51,7 +51,7 @@ def create():
 
 
 @app.route("/location/<string:id>", methods=['PUT'])
-def update(id):
+def update_location(id):
     data = request.json
     cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
@@ -64,8 +64,8 @@ def update(id):
 
     # update dados
     geom_statement = f"POINT({data['lat']} {data['long']})"
-    statement = f"UPDATE localizacoes "\
-                f"SET nome = '{data['nome']}', geom = ST_GeomFromText('{geom_statement}') "\
+    statement = f"UPDATE localizacoes " \
+                f"SET nome = '{data['nome']}', geom = ST_GeomFromText('{geom_statement}') " \
                 f"WHERE id = '{id}'"
 
     try:
@@ -79,8 +79,7 @@ def update(id):
 
 
 @app.route("/location/<string:id>", methods=['DELETE'])
-def delete(id):
-    data = request.json
+def delete_location(id):
     cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
     # Verifica se já existe esse id passado
@@ -90,8 +89,8 @@ def delete(id):
     if location is None:
         return {"msg": "Não existe esse id registrado "}, 403
 
-    #Deletar localização
-    statement= f"DELETE FROM localizacoes where id = '{id}'"
+    # Deletar localização
+    statement = f"DELETE FROM localizacoes where id = '{id}'"
 
     try:
         cursor.execute(statement)
