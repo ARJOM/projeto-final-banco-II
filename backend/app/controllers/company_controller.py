@@ -13,3 +13,12 @@ def list_company():
         item['_id'] = str(item['_id'])
         result.append(item)
     return jsonify(result)
+
+
+@app.route("/company/<string:id>", methods=['GET'])
+def detail_company(id):
+    colecao = mongo.empresas
+    result = colecao.find_one({"_id": ObjectId(id)})
+    result["_id"] = str(result["_id"])
+    return result
+
