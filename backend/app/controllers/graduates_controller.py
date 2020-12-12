@@ -2,6 +2,7 @@ from app import app
 from flask import jsonify, request
 from bson.objectid import ObjectId
 from app.database.mongo_connection import conn_mongo as mongo
+from app.database.neo4j_connection import driver
 
 
 @app.route("/graduate", methods=['GET'])
@@ -32,8 +33,13 @@ def create_graduate():
     for _ in egressos:
         return {"msg": "Já existe um egresso registrado com a matrícula informada"}, 403
 
-    # Insere egresso
-    colecao.insert_one(data)
+    # Insere egresso no mongo
+    egresso = colecao.insert_one(data)
+
+    # Insere egresso no neo4j
+    query = "CREATE(:Egresso {nome: $egresso_name, chave: $egresso_id})"
+    with driver.session() as session:
+        session.run(query, egresso_name=data['nome'], egresso_id=str(egresso.inserted_id))
     return {"msg": "Egresso registrado com sucesso"}
 
 

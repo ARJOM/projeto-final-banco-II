@@ -2,7 +2,7 @@ from app import app
 from flask import jsonify, request
 from bson.objectid import ObjectId
 from app.database.mongo_connection import conn_mongo as mongo
-
+from app.database.neo4j_connection import driver
 
 
 @app.route("/company", methods=['GET'])
@@ -22,6 +22,7 @@ def detail_company(id):
     result["_id"] = str(result["_id"])
     return result
 
+
 @app.route("/company", methods=['POST'])
 def create_company():
     colecao = mongo.empresas
@@ -33,8 +34,14 @@ def create_company():
         return {"msg": "Já existe uma empresa registrada com o nome informado"}, 403
 
     # Insere empresa
-    colecao.insert_one(data)
+    empresa = colecao.insert_one(data)
+
+    # Insere egresso no neo4j
+    query = "CREATE(:Empresa {nome: $company_name, chave: $company_id})"
+    with driver.session() as session:
+        session.run(query, company_name=data['nome'], company_id=str(empresa.inserted_id))
     return {"msg": "Empresa registrada com sucesso"}
+
 
 @app.route("/company/<string:id>", methods=['PUT'])
 def update_company(id):
