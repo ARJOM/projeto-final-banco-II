@@ -22,3 +22,16 @@ def detail_company(id):
     result["_id"] = str(result["_id"])
     return result
 
+@app.route("/company", methods=['POST'])
+def create_company():
+    colecao = mongo.empresas
+    data = request.json
+
+    # Verifica se já existe uma empresa com o nome informado
+    empresas = colecao.find({"nome": data['nome']})
+    for _ in empresas:
+        return {"msg": "Já existe uma empresa registrada com o nome informado"}, 403
+
+    # Insere empresa
+    colecao.insert_one(data)
+    return {"msg": "empresa registrada com sucesso"}
