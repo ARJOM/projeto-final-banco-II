@@ -1,5 +1,6 @@
 from app import app
 from flask import jsonify, request
+from bson.objectid import ObjectId
 from app.database.mongo_connection import conn_mongo as mongo
 
 
@@ -10,7 +11,6 @@ def list_graduate():
     for item in colecao.find():
         item['_id'] = str(item['_id'])
         result.append(item)
-    print(result)
     return jsonify(result)
 
 
@@ -27,3 +27,11 @@ def create_graduate():
     # Insere egresso
     colecao.insert_one(data)
     return {"msg": "Egresso registrado com sucesso"}
+
+
+@app.route("/graduate/<string:id>", methods=['PUT'])
+def update_graduate(id):
+    colecao = mongo.egressos
+    data = request.json
+    colecao.update_one({"_id": ObjectId(id)}, {"$set": data})
+    return {"msg": "Egresso atualizado com sucesso"}
