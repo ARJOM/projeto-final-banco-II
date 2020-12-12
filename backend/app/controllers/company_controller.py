@@ -42,3 +42,10 @@ def update_company(id):
     data = request.json
     colecao.update_one({"_id": ObjectId(id)}, {"$set": data})
     return {"msg": "Empresa atualizada com sucesso"}
+
+
+@app.route("/company/<string:id>", methods=['DELETE'])
+def delete_company(id):
+    colecao = mongo.empresas
+    colecao.delete_one({"_id": ObjectId(id)})
+    return {"msg": "Empresa removida com sucesso"}
