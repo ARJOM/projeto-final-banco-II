@@ -35,3 +35,10 @@ def update_graduate(id):
     data = request.json
     colecao.update_one({"_id": ObjectId(id)}, {"$set": data})
     return {"msg": "Egresso atualizado com sucesso"}
+
+
+@app.route("/graduate/<string:id>", methods=['DELETE'])
+def delete_graduate(id):
+    colecao = mongo.egressos
+    colecao.delete_one({"_id": ObjectId(id)})
+    return {"msg": "Egresso removido com sucesso"}
