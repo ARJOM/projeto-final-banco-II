@@ -14,6 +14,14 @@ def list_graduate():
     return jsonify(result)
 
 
+@app.route("/graduate/<string:id>", methods=['GET'])
+def detail_graduate(id):
+    colecao = mongo.egressos
+    result = colecao.find_one({"_id": ObjectId(id)})
+    result["_id"] = str(result["_id"])
+    return result
+
+
 @app.route("/graduate", methods=['POST'])
 def create_graduate():
     colecao = mongo.egressos
