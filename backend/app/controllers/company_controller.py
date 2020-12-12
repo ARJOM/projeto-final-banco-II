@@ -34,4 +34,11 @@ def create_company():
 
     # Insere empresa
     colecao.insert_one(data)
-    return {"msg": "empresa registrada com sucesso"}
+    return {"msg": "Empresa registrada com sucesso"}
+
+@app.route("/company/<string:id>", methods=['PUT'])
+def update_company(id):
+    colecao = mongo.empresas
+    data = request.json
+    colecao.update_one({"_id": ObjectId(id)}, {"$set": data})
+    return {"msg": "Empresa atualizada com sucesso"}
