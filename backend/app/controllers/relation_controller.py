@@ -27,3 +27,16 @@ def list_relation_company(id):
         response.append({"chave":record[0],"nome":record[1], "desde":record[2]})
 
     return jsonify(response)
+
+
+@app.route("/relation/egresso/<string:id>", methods=['GET'])
+def list_relation_egresso(id):
+    statement = (
+        "MATCH(c:Empresa)<-[t:Trabalha]-(e:Egresso {chave: $id}) return c.chave, c.nome, t.desde "
+    )
+    result = driver.session().run(statement, id=id)
+    response = []
+    for record in result:
+        response.append({"chave":record[0],"nome":record[1], "desde":record[2]})
+
+    return jsonify(response)
