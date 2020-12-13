@@ -40,3 +40,17 @@ def list_relation_egresso(id):
         response.append({"chave":record[0],"nome":record[1], "desde":record[2]})
 
     return jsonify(response)
+
+
+@app.route("/relation/<string:id>", methods=['PUT'])
+def list_relation_trabalhou(id):
+    data = request.json
+    statement = (
+        "MATCH(e:Egresso {chave: $id})-[t:Trabalha]->(c:Empresa {chave: $id_empresa})"
+        "CREATE(e)-[:Trabalhou {de: t.desde, ate: $data}]->(c)"
+        "DELETE(t)"
+    )
+    driver.session().run(statement, id=id, id_empresa=data["empresa"], data=data["data"])
+    
+
+    return {"msg": "Relacionamento atualizado!"}
