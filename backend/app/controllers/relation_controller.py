@@ -11,5 +11,19 @@ def create_relation():
         "MATCH (c:Empresa {chave: $empresa})"
         "CREATE (e)-[:Trabalha {desde: $data}]->(c)"
     )
-    driver.session().run(statement, egresso=data["egresso"], empresa=data["empresa"], data=data['data'])
+    driver.session().run(
+        statement, egresso=data["egresso"], empresa=data["empresa"], data=data['data'])
     return {"msg": "Relacionamento criado com sucesso!"}
+
+
+@app.route("/relation/work/<string:id>", methods=['GET'])
+def list_relation_company(id):
+    statement = (
+        "MATCH(e:Egresso)-[t:Trabalha]->(c:Empresa {chave: $id}) return e.chave, e.nome, t.desde "
+    )
+    result = driver.session().run(statement, id=id)
+    response = []
+    for record in result:
+        response.append({"chave":record[0],"nome":record[1], "desde":record[2]})
+
+    return jsonify(response)
