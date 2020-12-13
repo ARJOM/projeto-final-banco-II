@@ -2,7 +2,7 @@ from app import app
 from flask import jsonify, request
 from app.database.neo4j_connection import driver
 
-
+#criação de relacionamento entre egresso e empresa("egresso trabalha na empresa")
 @app.route("/relation", methods=['POST'])
 def create_relation():
     data = request.json
@@ -15,7 +15,7 @@ def create_relation():
         statement, egresso=data["egresso"], empresa=data["empresa"], data=data['data'])
     return {"msg": "Relacionamento criado com sucesso!"}
 
-
+#Listagem de Egressos que trabalham em uma empresa "X"
 @app.route("/relation/work/<string:id>", methods=['GET'])
 def list_relation_company(id):
     statement = (
@@ -28,7 +28,7 @@ def list_relation_company(id):
 
     return jsonify(response)
 
-
+#Listagem de Empresas que um Egresso "X" trabalha
 @app.route("/relation/egresso/<string:id>", methods=['GET'])
 def list_relation_egresso(id):
     statement = (
@@ -41,7 +41,7 @@ def list_relation_egresso(id):
 
     return jsonify(response)
 
-
+#Alterar Relação trabalha para Trabalhou
 @app.route("/relation/<string:id>", methods=['PUT'])
 def list_relation_trabalhou(id):
     data = request.json
@@ -53,4 +53,4 @@ def list_relation_trabalhou(id):
     driver.session().run(statement, id=id, id_empresa=data["empresa"], data=data["data"])
     
 
-    return {"msg": "Relacionamento atualizado!"}
+    return {"msg": "Relacionamento atualizado!"}   
