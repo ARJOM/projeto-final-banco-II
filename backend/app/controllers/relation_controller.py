@@ -53,4 +53,17 @@ def list_relation_trabalhou(id):
     driver.session().run(statement, id=id, id_empresa=data["empresa"], data=data["data"])
     
 
-    return {"msg": "Relacionamento atualizado!"}   
+    return {"msg": "Relacionamento atualizado!"}
+
+#lisagem de ex funcionarios de uma empresas "X"
+@app.route("/relation/worked/<string:id>", methods=['GET'])
+def list_relation_company_worked(id):
+    statement = (
+        "MATCH(e:Egresso)-[t:Trabalhou]->(c:Empresa {chave: $id}) return e.chave, e.nome, t.de, t.ate "
+    )
+    result = driver.session().run(statement, id=id)
+    response = []
+    for record in result:
+        response.append({"chave":record[0],"nome":record[1], "de":record[2], "ate": record[3]})
+
+    return jsonify(response)
