@@ -48,6 +48,16 @@ def update_graduate(id):
     colecao = mongo.egressos
     data = request.json
     colecao.update_one({"_id": ObjectId(id)}, {"$set": data})
+
+    # Atualizar egresso no neo4j
+    query = (
+        "MATCH(e:Egresso {chave: $egresso_id})"
+        "SET e.nome = $egresso_name"
+    )
+
+    with driver.session() as session:
+        session.run(query, egresso_name=data['nome'], egresso_id=id)
+
     return {"msg": "Egresso atualizado com sucesso"}
 
 
