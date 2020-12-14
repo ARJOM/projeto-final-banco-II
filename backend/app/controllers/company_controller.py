@@ -36,7 +36,7 @@ def create_company():
     # Insere empresa
     empresa = colecao.insert_one(data)
 
-    # Insere egresso no neo4j
+    # Insere empresa no neo4j
     query = "CREATE(:Empresa {nome: $company_name, chave: $company_id})"
     with driver.session() as session:
         session.run(query, company_name=data['nome'], company_id=str(empresa.inserted_id))
@@ -48,6 +48,14 @@ def update_company(id):
     colecao = mongo.empresas
     data = request.json
     colecao.update_one({"_id": ObjectId(id)}, {"$set": data})
+
+    # Atualiza empresa no neo4j
+    query = (
+        "MATCH(c:Empresa {chave: $company_id}) "
+        "SET c.nome = $company_name"
+    )
+    with driver.session() as session:
+        session.run(query, company_name=data['nome'], company_id=id)
     return {"msg": "Empresa atualizada com sucesso"}
 
 
