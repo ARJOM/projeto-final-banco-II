@@ -1,8 +1,9 @@
 import React from 'react';
+import Routes from './Routes';
 
 function App() {
   return (
-    <h1>Fala tu menor</h1>
+    <Routes/>
   );
 }
 
