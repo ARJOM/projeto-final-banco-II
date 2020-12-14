@@ -4,11 +4,13 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import CreateEgresso from './pages/Egressos/Create';
 import ListEgresso from './pages/Egressos/List';
 import UpadateEgresso from "./pages/Egressos/Update";
+import ProfileEgresso from "./pages/Egressos/Profile";
 
 import CreateEmpresa from './pages/Empresas/Create';
 import ListEmpresa from './pages/Empresas/List';
-import UpadateEmpresa from './pages/Empresas/Update'
-import ProfileEmpresa from './pages/Empresas/Profile'
+import UpadateEmpresa from './pages/Empresas/Update';
+import ProfileEmpresa from './pages/Empresas/Profile';
+import Contratar from './pages/Empresas/Relacionamento';
 
 export default function Routes() {
     return (
@@ -21,6 +23,8 @@ export default function Routes() {
                 <Route path={'/egresso/:id'} component={UpadateEgresso} exact/>
                 <Route path={'/empresa/:id'} component={UpadateEmpresa} exact/>
                 <Route path={'/empresa/profile/:id'} component={ProfileEmpresa} exact/>
+                <Route path={'/egresso/profile/:id'} component={ProfileEgresso} exact/>
+                <Route path={'/contratar/:id'} component={Contratar} exact/>
             </Switch>
         </BrowserRouter>
     )
