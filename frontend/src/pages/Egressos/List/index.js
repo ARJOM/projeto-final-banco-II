@@ -17,7 +17,7 @@ export default function ListEgresso(){
             <h2>Lista de Egressos</h2>
             <ul>
             {egressos.map(egresso => (
-                <li key={egresso._id}>{egresso.nome} - {egresso.matricula}</li>
+                <li key={egresso._id}>{egresso.nome} - {egresso.matricula} <a href={`/egresso/${egresso._id}`}>Editar</a> </li>
             ))}
             </ul>
             <Link to={"/egresso/novo"}>Novo Egresso</Link>
