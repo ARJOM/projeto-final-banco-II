@@ -7,6 +7,8 @@ import UpadateEgresso from "./pages/Egressos/Update";
 
 import CreateEmpresa from './pages/Empresas/Create';
 import ListEmpresa from './pages/Empresas/List';
+import UpadateEmpresa from './pages/Empresas/Update'
+import ProfileEmpresa from './pages/Empresas/Profile'
 
 export default function Routes() {
     return (
@@ -17,6 +19,8 @@ export default function Routes() {
                 <Route path={'/egresso'} component={ListEgresso} exact/>
                 <Route path={'/empresa'} component={ListEmpresa} exact/>
                 <Route path={'/egresso/:id'} component={UpadateEgresso} exact/>
+                <Route path={'/empresa/:id'} component={UpadateEmpresa} exact/>
+                <Route path={'/empresa/profile/:id'} component={ProfileEmpresa} exact/>
             </Switch>
         </BrowserRouter>
     )
