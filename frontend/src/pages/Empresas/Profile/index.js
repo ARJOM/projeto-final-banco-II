@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import api from '../../../services/api';
 
 
-export default function Profile() {
+export default function ProfileEmpresa() {
     const [exFuncionarios, setexFuncionarios] = useState([]);
     const [contratados, setContratados] = useState([]);
+    const [empresa, setEmpresa] = useState({});
+
 
     const { id } = useParams();
 
     useEffect(() => {
-        api.get(`relation/worked/${id}`)
+        api.get(`/company/${id}`)
+            .then(res => {
+                setEmpresa(res.data)
+            })
+        api.get(`/relation/worked/${id}`)
             .then(res => {
                 setexFuncionarios(res.data)
             })
@@ -23,10 +29,12 @@ export default function Profile() {
             .catch(err => console.log(err));
     }, [id])
 
+
     return (
         <div>
+            <h1>Empresa: {empresa.nome} {empresa.cnpj}</h1>
             <div>
-                <h2>Lista de ex Funcionarios</h2>
+                <h2>Lista de ex Funcionarios </h2>
                 <ul>
                     {exFuncionarios.map(exFuncionario => (
                         <li key={exFuncionario.chave}>
@@ -46,13 +54,18 @@ export default function Profile() {
                     {contratados.map(contratado => (
                         <li key={contratado.chave}>
                             <strong> Nome do funcionario: </strong>
-                            <p>{contratado.nome}</p>
+                            <p>
+                                {contratado.nome}
+                                <button>Demitir</button>
+                            </p>
+
                             <strong>Começou em:</strong>
                             <p>{contratado.desde}</p>
                         </li>
                     ))}
                 </ul >
             </div>
+            <Link to={`/contratar/${id}`}>Contratar</Link>
         </div >
 
     )
