@@ -30,16 +30,6 @@ export default function UpadateEgresso(){
             .catch(err => console.log(err));
     }
 
-    function handleDelete(){
-        api.delete(`egresso/${id}`)
-            .then(res => console.log(res))
-            .catch(err => console.log(err));
-        // Todo Corrigir api
-        // api.delete(`location/${id}`)
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err));
-    }
-
     return(
         <div>
             <h2>Atualização do Egresso</h2>
@@ -53,7 +43,6 @@ export default function UpadateEgresso(){
 
                 <input type={"submit"} value={"Salvar"}/>
             </form>
-            <button onClick={handleDelete}>Deletar Egresso</button>
         </div>
     )
 }
