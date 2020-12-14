@@ -17,7 +17,7 @@ export default function ListEmpresa(){
             <h2>Lista de Empresas</h2>
             <ul>
             {empresa.map(empresa => (
-                <li key={empresa._id}> {empresa.nome} </li>
+                <li key={empresa._id}> {empresa.nome} - {empresa.cnpj}</li>
             ))}
             </ul>
             <Link to={"/empresa/novo"}>Nova Empresa</Link>
