@@ -8,7 +8,6 @@ export default function ProfileEmpresa() {
     const [contratados, setContratados] = useState([]);
     const [empresa, setEmpresa] = useState({});
 
-
     const { id } = useParams();
 
     useEffect(() => {
@@ -28,6 +27,16 @@ export default function ProfileEmpresa() {
             })
             .catch(err => console.log(err));
     }, [id])
+
+
+    function handleDemitir(id_funcionario){
+        const today = new Date;
+        const date = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
+        const data = {empresa:id, data:date}
+        api.put(`/relation/${id_funcionario}`, data)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err));
+    }
 
 
     return (
@@ -53,11 +62,11 @@ export default function ProfileEmpresa() {
                 <h2>Lista dos Funcionarios atuais</h2>
                 <ul>
                     {contratados.map(contratado => (
-                        <li key={contratado.chave}>
+                        <li key={contratado._id}>
                             <strong> Nome do funcionario: </strong>
                             <p>
                                 {contratado.nome}
-                                <button>Demitir</button>
+                                <button onClick={() => handleDemitir(contratado._id)}>Demitir</button>
                             </p>
 
                             <strong>Começou em:</strong>
