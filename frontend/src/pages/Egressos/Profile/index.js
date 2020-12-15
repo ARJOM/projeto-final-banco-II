@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import api from '../../../services/api';
 
 
@@ -25,6 +25,7 @@ export default function ProfileEgresso() {
 
     return (
         <div>
+            <Link to={"/egresso/"}>Voltar</Link>
             <div>
                 <h2>Ja trabalhou: </h2>
                 <ul>

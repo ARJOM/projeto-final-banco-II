@@ -32,6 +32,7 @@ export default function ProfileEmpresa() {
 
     return (
         <div>
+            <Link to={"/empresa/"}>Voltar</Link>
             <h1>Empresa: {empresa.nome} {empresa.cnpj}</h1>
             <div>
                 <h2>Lista de ex Funcionarios </h2>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import api from '../../../services/api';
 
 
@@ -32,6 +32,7 @@ export default function UpadateEgresso(){
 
     return(
         <div>
+            <Link to={"/egresso/"}>Voltar</Link>
             <h2>Atualização do Egresso</h2>
             <form onSubmit={handleSubmit}>
                 <label>Nome: </label>

@@ -14,6 +14,7 @@ export default function ListEmpresa() {
 
     return (
         <div>
+            <Link to={"/"}>Voltar</Link>
             <h2>Lista de Empresas</h2>
             <ul>
                 {empresa.map(empresa => (

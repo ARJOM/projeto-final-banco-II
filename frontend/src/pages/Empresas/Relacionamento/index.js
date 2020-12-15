@@ -40,6 +40,7 @@ export default function Contratar() {
 
     return (
         <div>
+            <Link to={`/empresa/profile/${id}`}>Voltar</Link>
             <h2>Egressos para a {empresa.nome}</h2>
             <p>Selecione o seu funcionario</p>
             <form onSubmit={handleContratar}>

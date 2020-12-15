@@ -15,6 +15,7 @@ export default function ListEgresso() {
 
     return (
         <div>
+            <Link to={"/"}>Voltar</Link>
             <h2>Lista de Egressos</h2>
             <ul>
                 {egressos.map(egresso => (

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams,Link} from 'react-router-dom';
 import api from '../../../services/api';
 
 
@@ -30,6 +30,7 @@ export default function UpadateEmpresa(){
 
     return(
         <div>
+            <Link to={"/empresa/"}>Voltar</Link>
             <h2>Atualização do Empresas</h2>
             <form onSubmit={handleSubmit}>
                 <label>Nome: </label>
