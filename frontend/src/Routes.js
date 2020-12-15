@@ -14,6 +14,8 @@ import UpadateEmpresa from './pages/Empresas/Update';
 import ProfileEmpresa from './pages/Empresas/Profile';
 import Contratar from './pages/Empresas/Relacionamento';
 
+import CreateLocation from './pages/Localizacoes/Create';
+
 export default function Routes() {
     return (
         <BrowserRouter>
@@ -28,6 +30,8 @@ export default function Routes() {
                 <Route path={'/empresa/profile/:id'} component={ProfileEmpresa} exact />
                 <Route path={'/egresso/profile/:id'} component={ProfileEgresso} exact />
                 <Route path={'/contratar/:id'} component={Contratar} exact />
+
+                <Route path={'/location/:id'} component={CreateLocation} exact/>
             </Switch>
         </BrowserRouter>
     )
