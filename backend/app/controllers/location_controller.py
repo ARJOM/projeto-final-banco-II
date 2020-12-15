@@ -7,7 +7,7 @@ from app.database.postgres_connection import conn_psql as psql
 @app.route("/location", methods=['GET'])
 def list_location():
     cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    statement = "SELECT * FROM localizacoes"
+    statement = "SELECT id, ST_X(geom) as lat, ST_Y(geom) as long FROM localizacoes"
     cursor.execute(statement)
     result = cursor.fetchall()
     cursor.close()
@@ -17,7 +17,7 @@ def list_location():
 @app.route("/location/<string:id>", methods=['GET'])
 def detail_location(id):
     cursor = psql.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    statement = f"SELECT * FROM localizacoes WHERE id='{id}'"
+    statement = f"SELECT id, ST_X(geom) as lat, ST_Y(geom) as long FROM localizacoes WHERE id='{id}'"
     cursor.execute(statement)
     result = cursor.fetchone()
     cursor.close()
@@ -38,8 +38,8 @@ def create_location():
 
     # Cria a entidade
     geom_statement = f"POINT({data['lat']} {data['long']})"
-    statement = f"INSERT INTO localizacoes(id, nome, geom) " \
-                f"VALUES ('{data['id']}', '{data['nome']}', ST_GeomFromText('{geom_statement}'))"
+    statement = f"INSERT INTO localizacoes(id, geom) " \
+                f"VALUES ('{data['id']}', ST_GeomFromText('{geom_statement}'))"
     try:
         cursor.execute(statement)
         psql.commit()
@@ -65,7 +65,7 @@ def update_location(id):
     # update dados
     geom_statement = f"POINT({data['lat']} {data['long']})"
     statement = f"UPDATE localizacoes " \
-                f"SET nome = '{data['nome']}', geom = ST_GeomFromText('{geom_statement}') " \
+                f"SET nome = geom = ST_GeomFromText('{geom_statement}') " \
                 f"WHERE id = '{id}'"
 
     try:

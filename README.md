@@ -8,7 +8,6 @@ Tabela com as informações geométricas das localizações
 ```sql
 CREATE TABLE localizacoes(
     id VARCHAR(255),
-    nome VARCHAR(255),
     geom GEOMETRY,
     CONSTRAINT local_pk PRIMARY KEY (id)
 )
