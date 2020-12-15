@@ -65,7 +65,7 @@ def update_location(id):
     # update dados
     geom_statement = f"POINT({data['lat']} {data['long']})"
     statement = f"UPDATE localizacoes " \
-                f"SET nome = geom = ST_GeomFromText('{geom_statement}') " \
+                f"SET geom = ST_GeomFromText('{geom_statement}') " \
                 f"WHERE id = '{id}'"
 
     try:

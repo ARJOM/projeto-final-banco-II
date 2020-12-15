@@ -15,6 +15,7 @@ import ProfileEmpresa from './pages/Empresas/Profile';
 import Contratar from './pages/Empresas/Relacionamento';
 
 import CreateLocation from './pages/Localizacoes/Create';
+import UpdateLocation from './pages/Localizacoes/Update';
 
 export default function Routes() {
     return (
@@ -32,6 +33,7 @@ export default function Routes() {
                 <Route path={'/contratar/:id'} component={Contratar} exact />
 
                 <Route path={'/location/:id'} component={CreateLocation} exact/>
+                <Route path={'/location/:id/edit'} component={UpdateLocation} exact/>
             </Switch>
         </BrowserRouter>
     )
