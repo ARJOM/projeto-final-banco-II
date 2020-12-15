@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../../services/api';
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
 
 export default function Contratar() {
@@ -10,6 +10,7 @@ export default function Contratar() {
     const [date, setdate] = useState('');
 
     const { id } = useParams();
+    const history = useHistory();
 
     function handleContratar(e) {
         e.preventDefault();
@@ -23,6 +24,8 @@ export default function Contratar() {
         api.post('/relation', data)
             .then(res => console.log(res.data.msg))
             .catch(err => console.log(err));
+
+        history.push("/");
     }
 
     useEffect(() => {

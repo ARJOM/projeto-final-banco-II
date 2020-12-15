@@ -30,12 +30,14 @@ export default function ProfileEmpresa() {
 
 
     function handleDemitir(id_funcionario){
-        const today = new Date;
+        const today = new Date();
         const date = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
         const data = {empresa:id, data:date}
         api.put(`/relation/${id_funcionario}`, data)
             .then(res => console.log(res.data))
             .catch(err => console.log(err));
+
+        window.location.reload();
     }
 
 

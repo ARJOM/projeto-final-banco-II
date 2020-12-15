@@ -6,6 +6,7 @@ import api from '../../../services/api';
 export default function ProfileEgresso() {
     const [exEmpresas, setexEmpresas] = useState([]);
     const [empregosAtual, setempregoAtual] = useState([]);
+    const [egresso, setEgresso] = useState({});
 
     const { id } = useParams();
 
@@ -21,11 +22,18 @@ export default function ProfileEgresso() {
                 setempregoAtual(res.data)
             })
             .catch(err => console.log(err));
+
+        api.get(`/graduate/${id}`)
+            .then(res => setEgresso(res.data))
+            .catch(err => console.log(err));
     }, [id])
 
     return (
         <div>
             <Link to={"/egresso/"}>Voltar</Link>
+            <h1>Egresso: {egresso.nome}</h1>
+            <h1>Curso: {egresso.curso}</h1>
+            <h1>Matrícula: {egresso.matricula}</h1>
             <div>
                 <h2>Ja trabalhou: </h2>
                 <ul>
