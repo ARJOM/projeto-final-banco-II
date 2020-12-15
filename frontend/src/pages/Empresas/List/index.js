@@ -25,6 +25,9 @@ export default function ListEmpresa() {
                         <a href={`/empresa/${empresa._id}`}>
                             Editar
                         </a>
+                        <a href={`/location/${empresa._id}/edit`}>
+                            Localização
+                        </a>
                     </li>
                 ))}
             </ul>

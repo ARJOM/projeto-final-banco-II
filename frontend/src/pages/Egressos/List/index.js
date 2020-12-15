@@ -27,6 +27,9 @@ export default function ListEgresso() {
                         <a href={`/egresso/${egresso._id}`}>
                             Editar
                         </a>
+                        <a href={`/location/${egresso._id}/edit`}>
+                            Localização
+                        </a>
                     </li>
                 ))}
             </ul>

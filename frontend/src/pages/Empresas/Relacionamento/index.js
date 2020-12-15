@@ -6,7 +6,6 @@ import { Link, useParams } from "react-router-dom";
 export default function Contratar() {
     const [egressos, setEgressos] = useState([]);
     const [empresa, setEmpresa] = useState('');
-    const [contratante, setContratante] = useState('');
     const [contratado, setContratado] = useState('');
     const [date, setdate] = useState('');
 
@@ -36,7 +35,7 @@ export default function Contratar() {
             .then(res => setEgressos(res.data))
             .catch(err => console.log(err));
 
-    }, [])
+    }, [id])
 
     return (
         <div>

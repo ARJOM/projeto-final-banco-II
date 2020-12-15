@@ -21,10 +21,12 @@ export function MapContainer(props) {
                 if (res.data !== null){
                     setLong(res.data['long']);
                     setLat(res.data['lat']);
+                } else {
+                    history.push(`/location/${id}`)
                 }
             })
             .catch(err => console.log(err));
-    }, [id]);
+    }, [id, history]);
 
     function handleSubmit(e){
         e.preventDefault();
